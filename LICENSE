@@ -1,0 +1,42 @@
+MIT License
+
+Copyright (c) 2026 The Dishwasher Android Port contributors
+
+-------------------------------------------------------------------------------
+SCOPE OF THIS LICENCE
+-------------------------------------------------------------------------------
+This licence applies ONLY to the original code, scripts, documentation and
+artwork authored for this repository (for example the Android platform layer in
+`src/Dishwasher/Platform/`, the re-authored shader sources in
+`src/Dishwasher/Content/fx/`, the import/derivation and tooling code, and the
+documentation under `docs/`).
+
+It does NOT apply to, and confers no rights in:
+  * "The Dishwasher: Dead Samurai" or any other game, or any of its code,
+    artwork, audio, text, data or other content, which remain the property of
+    their respective owners (Ska Studios and others); or
+  * any third-party component listed in `THIRD-PARTY-NOTICES.md`, which is
+    governed by its own licence.
+
+No game content is included or distributed in this repository. Using this
+software requires a legally obtained copy of the game, which you must supply
+yourself.
+-------------------------------------------------------------------------------
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

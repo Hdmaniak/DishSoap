@@ -1,0 +1,72 @@
+# ---------------------------------------------------------------------------
+# Build output
+# ---------------------------------------------------------------------------
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# ---------------------------------------------------------------------------
+# Release artifacts — APKs belong in GitHub Releases, not in the repository
+# ---------------------------------------------------------------------------
+*.apk
+*.aab
+*.idsig
+
+# Signing material — NEVER commit a keystore or its passwords.
+*.keystore
+*.jks
+*.bks
+*.p12
+*.pfx
+*.pepk
+keystore.properties
+signing.properties
+signing.gradle
+release-keystore/
+
+# ---------------------------------------------------------------------------
+# GAME CONTENT & DECOMPILED GAME CODE — NEVER COMMIT
+# (this repository ships none of it; these patterns are a safety net)
+# ---------------------------------------------------------------------------
+# Decompiled game source (bring your own decompile — see BUILDING.md).
+# Unanchored so src/Dishwasher/GameSource/ is covered too.
+GameSource/
+managed/
+decompiled/
+
+# Original and derived game assets
+Assets/data/
+Assets/gfx/
+Assets/sfx/
+Assets/Resources/
+/assets-clean/
+/extracted/
+/port/
+assets/data/
+assets/gfx/
+assets/sfx/
+assets/Resources/
+
+# Retail package / ROM / upstream source tarballs (fetched by the build scripts)
+Dishwasher*XBLA*.zip
+*Dead Samurai*.zip
+ffmpeg-*.tar.xz
+libogg-*.tar.gz
+libvorbis-*.tar.gz
+
+# ---------------------------------------------------------------------------
+# Device save backups & evidence captures (game content)
+# ---------------------------------------------------------------------------
+device-save-backups/
+*.sav
+saves/
+
+# ---------------------------------------------------------------------------
+# Misc
+# ---------------------------------------------------------------------------
+__pycache__/
+*.pyc
+.DS_Store
+*.log

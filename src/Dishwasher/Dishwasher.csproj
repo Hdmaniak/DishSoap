@@ -1,0 +1,70 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+    <OutputType>Exe</OutputType>
+    <ApplicationId>com.recomp.dishwasher</ApplicationId>
+    <AssemblyName>com.recomp.dishwasher</AssemblyName>
+    <RootNamespace>Dishwasher</RootNamespace>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <LangVersion>12.0</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>disable</Nullable>
+    <NoWarn>$(NoWarn);CS0169;CS0649;CS0414;CS0219;CS0672;CS0618;CS0108;CS0114;CS0162;CS1591;CS0628;CS0067;CS0168;CS0169</NoWarn>
+    <!-- Dishwasher audio: decode OGG-only XACT banks (the 8 music cues) via NVorbis. -->
+    <DefineConstants>$(DefineConstants);DISHWASHER_OGG</DefineConstants>
+  </PropertyGroup>
+
+  <!-- PORT (public build): -p:DishwasherPublic=true builds the content-free
+       "public" variant. It defines DISHWASHER_PUBLIC (shows the first-run
+       import screen and skips the internal boot path) and drops every tree of
+       game content from the APK. Only our own work ships: the compiled fx
+       shaders under Assets\fx (and Content\fx's MGCB output) plus the
+       import-manifest. The internal build is untouched (property absent). -->
+  <PropertyGroup Condition="'$(DishwasherPublic)' == 'true'">
+    <DefineConstants>$(DefineConstants);DISHWASHER_PUBLIC</DefineConstants>
+  </PropertyGroup>
+  <!-- Optional ownership gate, OFF by default (tolerant import).  Build with
+       -p:DishwasherStrictContent=true to define DISHWASHER_STRICT_CONTENT, which
+       turns PublicBuild.StrictContentValidation on: any missing or mismatched
+       original file then blocks the import again. -->
+  <PropertyGroup Condition="'$(DishwasherStrictContent)' == 'true'">
+    <DefineConstants>$(DefineConstants);DISHWASHER_STRICT_CONTENT</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(DishwasherPublic)' == 'true'">
+    <AndroidAsset Remove="Assets\data\**" />
+    <AndroidAsset Remove="Assets\gfx\**" />
+    <AndroidAsset Remove="Assets\sfx\**" />
+    <AndroidAsset Remove="Assets\Resources\**" />
+    <!-- Public-only audio decoder (arm64-v8a): a small FFmpeg-based XMA
+         decode bridge.  Not shipped in the internal build. -->
+    <AndroidNativeLibrary Include="Platform\Audio\native\arm64-v8a\*.so" />
+  </ItemGroup>
+  <!-- The Android SDK's asset staging dir is updated incrementally: switching
+       from the internal build to the public one leaves the previously-copied
+       game assets in obj/.../assets because the public item set is a subset and
+       the incremental _GenerateAndroidAssetsDir target is skipped. Delete the
+       staging dir for public builds so aapt only ever sees fx + the manifest. -->
+  <Target Name="DishwasherPublicClearStagedAssets"
+          Condition="'$(DishwasherPublic)' == 'true'"
+          BeforeTargets="_GenerateAndroidAssetsDir">
+    <RemoveDir Directories="$(MonoAndroidAssetsDirIntermediate)"
+               Condition="Exists('$(MonoAndroidAssetsDirIntermediate)')" />
+  </Target>
+  <ItemGroup>
+    <!-- App icon: the approved shield artwork.  The Android SDK's
+         default item globs auto-include Resources\*\*.png and Resources\*\*.xml,
+         so the whole launcher set ships without an explicit pattern here:
+           Resources/drawable/icon.png                 legacy @drawable/icon
+           Resources/mipmap-<density>/ic_launcher*.png legacy launcher (+round)
+           Resources/mipmap-<density>/ic_launcher_foreground.png / _background.png
+           Resources/mipmap-anydpi-v26/ic_launcher*.xml adaptive icon (API 26+)
+         Regenerate the whole set from docs/assets/generate-icon-from-art.py
+         (the generator's android option writes this exact Resources overlay).
+         AndroidManifest.xml + Activity1.cs point at @mipmap/ic_launcher. -->
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*" />
+    <PackageReference Include="MonoGame.Framework.Android" Version="3.8.*" />
+    <PackageReference Include="NVorbis" Version="0.10.5" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.recomp.dishwasher" android:versionCode="1" android:versionName="1.0">
+  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
+  <!-- PORT (mp): UDP sockets for System Link LAN co-op. -->
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <!-- PORT (rumble): required by Vibrator.vibrate() for controller and
+       device-fallback vibration. -->
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <!-- PORT (rumble): Bluetooth HID output reports for gamepad rumble on
+       API <= 30 (Android 12+ uses InputDevice.VibratorManager instead, so
+       these are scoped to the legacy range). -->
+  <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+  <uses-feature android:glEsVersion="0x00020000" android:required="true" />
+  <!-- Approved shield-art launcher icon (adaptive icon + legacy mipmap
+       fallbacks); regenerate with docs/assets/generate-icon-from-art.py.
+       @mipmap/ic_launcher is the adaptive icon (mipmap-anydpi-v26) with legacy PNG fallbacks. -->
+  <application android:label="Dishwasher" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round"></application>
+</manifest>

@@ -1,0 +1,60 @@
+
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:bin/$(Platform)
+/intermediateDir:obj/$(Platform)
+/platform:Android
+/config:
+/profile:Reach
+/compress:False
+
+#-------------------------------- References --------------------------------#
+
+
+#---------------------------------- Content ---------------------------------#
+
+#begin fx/poster.fx
+/build:fx/poster.fx
+#begin fx/lense.fx
+/build:fx/lense.fx
+#begin fx/grad.fx
+/build:fx/grad.fx
+#begin fx/blur.fx
+/build:fx/blur.fx
+#begin fx/bloom.fx
+/build:fx/bloom.fx
+#begin fx/redhaze.fx
+/build:fx/redhaze.fx
+#begin fx/fade.fx
+/build:fx/fade.fx
+#begin fx/water.fx
+/build:fx/water.fx
+#begin fx/trainblur.fx
+/build:fx/trainblur.fx
+#begin fx/trainover.fx
+/build:fx/trainover.fx
+#begin fx/bubble.fx
+/build:fx/bubble.fx
+#begin fx/burnblur.fx
+/build:fx/burnblur.fx
+#begin fx/comicblur.fx
+/build:fx/comicblur.fx
+#begin fx/color.fx
+/build:fx/color.fx
+#begin fx/trail.fx
+/build:fx/trail.fx
+#begin fx/newblood.fx
+/build:fx/newblood.fx
+#begin fx/camsplat.fx
+/build:fx/camsplat.fx
+#begin fx/ink.fx
+/build:fx/ink.fx
+#begin fx/wallblood.fx
+/build:fx/wallblood.fx
+
+# Extra non-runtime sketches kept from the original six (distinct primitives).
+#begin fx/Sprite.fx
+/build:fx/Sprite.fx
+#begin fx/SpriteShadow.fx
+/build:fx/SpriteShadow.fx
+

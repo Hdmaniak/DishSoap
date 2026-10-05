@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <LangVersion>12.0</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>importer-test</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Link the cross-platform importer sources (no MonoGame / no Android). -->
+    <Compile Include="../../../src/Dishwasher/Platform/Import/XnbV2.cs" />
+    <Compile Include="../../../src/Dishwasher/Platform/Import/PngWriter.cs" />
+    <Compile Include="../../../src/Dishwasher/Platform/Import/StfsReader.cs" />
+    <Compile Include="../../../src/Dishwasher/Platform/Import/ImportManifest.cs" />
+    <Compile Include="../../../src/Dishwasher/Platform/Import/ContentImporter.cs" />
+    <Compile Include="../../../src/Dishwasher/Platform/Import/GameContentSource.cs" />
+    <Compile Include="../../../src/Dishwasher/Platform/Import/ContentSourceFactory.cs" />
+    <Compile Include="../../../src/Dishwasher/Platform/Import/XwbReader.cs" />
+    <Compile Include="../../../src/Dishwasher/Platform/Import/XsbReader.cs" />
+    <Compile Include="../../../src/Dishwasher/Platform/Import/AudioImporter.cs" />
+    <Compile Include="../../../src/Dishwasher/Platform/Audio/NativeXma.cs" />
+  </ItemGroup>
+</Project>
