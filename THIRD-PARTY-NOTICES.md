@@ -98,13 +98,14 @@ inside the release APK:
 ## 3. Artwork in this repository
 
 The app icon (`docs/assets/icon-512.png`, `docs/assets/icon-192.png`,
-`docs/assets/ic_launcher-512.png`), the in-app launcher resources
-(`src/Dishwasher/Resources/drawable/icon.png` plus `Resources/mipmap-*`), and
-the README banner (`docs/assets/banner.png`) are original works created for this
-project — the **"halftone-burst"** design. They are covered by this repository's
-MIT licence and contain no imagery derived from the game. They are generated
-procedurally by `docs/assets/generate-icon.py`, which uses the **DejaVu Sans**
-typeface (Bitstream Vera / public licence) for generic banner text only.
+`docs/assets/ic_launcher-512.png`) and the in-app launcher resources
+(`src/Dishwasher/Resources/drawable/icon.png` plus `Resources/mipmap-*`) use
+artwork supplied by the project author and cropped/scaled by
+`docs/assets/generate-icon-from-art.py`. That artwork depicts the game's
+character and remains the property of its original rights holder; it is included
+here solely as this application's launcher icon and is **not** covered by this
+repository's MIT licence. (`docs/assets/generate-icon.py`, the earlier unused
+abstract "halftone-burst" generator, is retained for reference only.)
 
 ---
 

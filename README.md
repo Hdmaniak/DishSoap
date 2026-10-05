@@ -1,5 +1,3 @@
-![The Dishwasher — native Android port](docs/assets/banner.png)
-
 # The Dishwasher: Dead Samurai — native Android port
 
 A **native Android (arm64-v8a) port** of the Xbox 360 XBLA title

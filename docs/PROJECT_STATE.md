@@ -168,8 +168,7 @@ referencing per-density `ic_launcher_foreground` / `ic_launcher_background`),
 with legacy `mipmap-*` PNG fallbacks for pre-API-26 devices and a
 `drawable/icon.png` fallback. The manifest (`AndroidManifest.xml` +
 `Activity1.cs`) points at `@mipmap/ic_launcher` / `@mipmap/ic_launcher_round`.
-The README banner (`docs/assets/banner.png`, 1024×500) is a separate asset and
-still uses the older abstract concept.
+There is no README banner (the previous abstract banner asset was removed).
 
 On the adaptive layers the shield is held inside the central safe zone (its
 largest dimension is 54 % of the 108 dp layer, ~58 dp ≈ 88 % of the safe circle)
