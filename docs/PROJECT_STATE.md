@@ -1,6 +1,6 @@
 # PROJECT_STATE.md — *The Dishwasher: Dead Samurai* → native Android port
 
-**Last updated:** 2026-10-05
+**Last updated:** 2026-10-21 (v1.0.1 — death-screen touch fix, §19)
 **Status:** ✅ **Playable on Android.** Boots to menus, touch + gamepad input, audio, widescreen, saves,
 rumble/vibration routing, a real EXIT, and a first-run that skips the storage screen (see §18).
 **Load time optimized:** ~24.6 s → **~5.0 s warm** (~6.5 s cold after install) via Release+AOT,
@@ -422,6 +422,7 @@ Final flags: `Globals.LoaderCarouselSeconds = 4.0f`, `Globals.ParallelTextureDec
 | `fps-counter-limiter.md` | FPS counter + working frame limiter, game-speed invariance proof |
 | `touch-controls.md` | touch synthesis, coordinate spaces, BACK mapping |
 | `touch-tap-select.md` | draw-time row hit-testing (tap = select+activate) |
+| `death-screen-touch.md` | **v1.0.1**: death screen + confirm box respond to touch (§19) |
 | `input-diagnosis.md` | the MonoGame `GamePad.Initialize()` bug |
 | `multiplayer-lan.md` | **System Link LAN co-op** — netcode map, UDP protocol, 2-phone verification |
 | `public-build.md` | **no-bundled-content build** — switch, import/validation, on-device texture derivation |
@@ -668,3 +669,50 @@ leak-free copy of the working port's release sanitizer (the exact private litera
 base64-encoded in the script so the public tree never contains them). Run it after any future
 sync from the working port to reproduce the sanitization.
 
+
+
+---
+
+## 19. ✅ Death screen did not respond to touch (fixed in v1.0.1, 2026-10-21)
+
+**Reported:** playing with touch controls, dying shows **YOU ARE DEAD!** with
+`CONTINUE` / `RESTART LEVEL` / `END`, but nothing reacts to touch, so the game cannot be
+continued (a controller still worked).
+
+**Root cause (two gaps):**
+1. **Touch gate.** Menu touches are only accepted when `Game1.gameMode != 0` or
+   `Globals.paused`. The death screen runs in-level (`gameMode == 0`) and the HUD forces
+   `Globals.paused = false` while it is up, so it was treated as **active gameplay**, whose
+   touches go to the on-screen pad — which is explicitly disabled while
+   `Globals.uberDeadFrame > 0` (`Game1.portTouchPadContext`). The event had no owner and
+   was discarded.
+2. **No tap targets.** Tap-to-select relies on `MenuTouchTargets`, which records rows drawn
+   by `MainMenu.drawOption`. The death list is drawn by the **HUD**, so no rows existed.
+
+**Fix:**
+- New helper `projectDish/DeathScreenTouch.cs` (our code, no Android dependencies): per-frame
+  row rects + one-shot pending row, same pattern as `MenuTouchTargets`.
+- `HUD.Draw` clears the list each frame and records the rect of every death row it draws
+  (`CONTINUE`/`RESTART LEVEL`/`END`, and `RETRY`/`END` in arcade) plus the two
+  **ARE YOU SURE?** rows (confirm / cancel). HUD draws straight to the logical backbuffer,
+  so **no canvas mapping** is needed — the touch layer's logical pixels are the same space.
+- `Platform/TouchControls.cs`: `DeathContext()` (`gameMode == 0 && uberDeadFrame > 0`)
+  is accepted by `OnTouch`, and `ProcessPendingTap` hit-tests the death rows there.
+- `HUD.Update` consumes the row, sets `continueSel` / `uberConfirmSel`, and raises the same
+  `keyJump` edge a pad **A** produces — so all original confirm logic is reused.
+- A greyed-out `CONTINUE` (no continues left) is **not** tappable: the game's own guard would
+  bounce that selection onto `RESTART LEVEL`, so tapping it would open a destructive dialog.
+- No "tap anywhere = A" fallback on this screen: a stray tap must not confirm `END`.
+
+**Verified** on Galaxy A52 (public build): tap `CONTINUE` and the confirm/cancel rows;
+`logcat -s Dishwasher` shows `[touch] death tap -> row N`. Front-end tap-to-select
+unaffected (`[touch] tap -> select row N`). Gamepad, keyboard-less touch play, saves and
+imported content unaffected (install over v1.0 with `adb install -r`, same release key).
+
+**Shipped:** public APK **v1.0.1** (`versionCode 2`), release-key signed, same package
+(`com.recomp.dishwasher`) — updates over v1.0 in place, keeping saves and imported content.
+
+**GameSource edits (NOT shipped, as usual):** `HUD.cs` (draw-time row recording + three
+consume points) and the new `DeathScreenTouch.cs` are inside `GameSource/`, so builders must
+re-apply them; the touch-routing half is documented in
+`docs/notes/android/death-screen-touch.md`.

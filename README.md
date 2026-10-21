@@ -22,6 +22,7 @@ recompiling it ahead-of-time against [MonoGame](https://monogame.net/) for .NET.
 - [Install and import your own game data](#install-and-import-your-own-game-data)
 - [How it works](#how-it-works)
 - [Building from source](#building-from-source)
+- [Changelog](#changelog)
 - [Licence and legal](#licence-and-legal)
 
 ---
@@ -65,7 +66,7 @@ differs (a different game revision) or is missing is a warning, not a blocker.
 | Feature | Status |
 |---|---|
 | Full single-player story, arcade, guitar solo, shop, comics | ✅ |
-| Touch input (menu navigation; tap = select/activate, swipe = d-pad) | ✅ |
+| Touch input (menus **and the death screen**; tap = select/activate, swipe = d-pad) | ✅ |
 | Optional on-screen gamepad + editable layout (default OFF) | ✅ |
 | Gamepad (Bluetooth/USB, Xbox-style mapping) | ✅ |
 | Rumble / vibration routing (phone and/or controller; OFF/PHONE/CONTROLLER/BOTH) | ✅ |
@@ -179,6 +180,25 @@ decompiled copy of the game — see **[`BUILDING.md`](BUILDING.md)**, which cove
 - the toolchain (.NET 8, Android SDK 35, NDK r28b, JDK 21, Wine);
 - exact commands for the public, arm64-only, internal and debug builds;
 - how to sign the release APK with **your own** keystore.
+
+---
+
+## Changelog
+
+### 1.0.1 — death-screen touch fix
+- **Fixed:** the **YOU ARE DEAD!** screen (and its *ARE YOU SURE?* box) now
+  responds to touch. The screen sits inside the level but is not gameplay and is
+  not drawn by the menu system, so it fell between the two touch paths and all
+  touches were discarded — touch-only players were stuck there and a controller
+  was required. `CONTINUE`, `RESTART LEVEL`, `END`, and the confirm/cancel
+  choices are now tapped directly; a greyed-out `CONTINUE` (no continues left)
+  is correctly inert, and a tap that misses every row does nothing.
+  See `docs/notes/android/death-screen-touch.md`.
+- No other behaviour changed.
+
+### 1.0 — first public release
+- Public, content-free arm64-v8a build with on-device import, tolerant SHA-256
+  ownership check, and on-device texture/font/audio derivation.
 
 ---
 
